@@ -53,15 +53,15 @@ public class SpellChecker {
        
         int leftIdx =0;    
         int rightIdx = dictionary.size() - 1;
-
+        loopCounter = 0;
         while (leftIdx <= rightIdx) {  
             loopCounter++; 
-            System.out.print(loopCounter + " "); 
+            
             int middleIdx = (leftIdx +rightIdx)/2 ;  
 
             if(dictionary.get(middleIdx).compareTo(word) == 0){
             
-                    System.out.println("-- LINEAR SEARCH: Number of words checked (loop iterations): " + loopCounter);
+                    System.out.println("-- BINARY SEARCH: Number of words checked (loop iterations): " + loopCounter);
                     return true;
                 
                
@@ -77,7 +77,8 @@ public class SpellChecker {
 
 
         }
-        
+        System.out.println("-- BINARY SEARCH: Number of words checked (loop iterations): " + loopCounter);
+
     
         return false;
     }
@@ -109,7 +110,7 @@ public class SpellChecker {
         String word = scan.nextLine();
 
         while (!word.equals("q")) {
-            if (checker.linearSpellCheck(word)) {
+            if (checker.binarySpellCheck(word)) {
                 System.out.println("-- " + word + " WAS found in the dictionary (so it's spelled correctly)");
             } else {
                 System.out.println("-- " + word + " was NOT found in the dictionary (so it's not spelled correctly)");
