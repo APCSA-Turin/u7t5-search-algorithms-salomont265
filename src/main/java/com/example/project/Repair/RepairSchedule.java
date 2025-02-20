@@ -1,6 +1,8 @@
 package com.example.project.Repair;
 import java.util.ArrayList;
 
+import com.example.project.Linear_Search.Search;
+
 public class RepairSchedule {
     /** Each element represents a repair by an individual mechanic in a bay. */
     private ArrayList<CarRepair> schedule;
@@ -12,10 +14,13 @@ public class RepairSchedule {
      * Precondition: n >= 0
      */
     public RepairSchedule(int n) {
+        numberOfMechanics = n;
+        schedule = new ArrayList<CarRepair>();
         /* to be implemented in part (a) */
     }
 
     public ArrayList<CarRepair> getSchedule() {
+        
         return schedule;
     }
 
@@ -23,6 +28,15 @@ public class RepairSchedule {
      * Precondition: 0 <= m < numberOfMechanics and b >= 0
      */
     public boolean addRepair(int m, int b) {
+        for( CarRepair car:schedule){
+            if(car.getBayNum() == b){
+                return false;
+            }
+            if(car.getMechanicNum() == m){
+                return false;
+            }
+        }
+        schedule.add(new CarRepair(m, b));
         return true;
     }
 
@@ -30,7 +44,16 @@ public class RepairSchedule {
      * as described in part (b).
      */
     public ArrayList<Integer> availableMechanics() {
-        return new ArrayList<Integer>();
+        ArrayList<Integer> list = new ArrayList<Integer>();
+        for(int i=0;i<numberOfMechanics;i++){
+            list.add(i);
+        }
+        for(CarRepair car:schedule){
+            if(Search.linearSearchFound(list,car.getMechanicNum())){
+            list.remove(Search.linearSearchFirst(list,car.getMechanicNum()));
+            }
+        }
+        return list;
     }
 
     /** Removes an element from schedule when a repair is complete.
